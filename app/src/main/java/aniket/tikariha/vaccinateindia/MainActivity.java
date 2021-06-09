@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,26 +25,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements CustomAdapter.VaccineItemClicked {
+    public static RecyclerView recyclerView;
+    public static TextView showdatetv;
     private static String newdate;
     ArrayList<Vaccines> numbers;
-    public static RecyclerView recyclerView;
     CustomAdapter customAdapter;
     EditText pincode;
     EditText datee;
     DatePicker simpleDatePicker;
     TextView textView;
-    public static TextView showdatetv;
-TextView textView2;
+    TextView textView2;
+
     public static void setdate(String date) {
         newdate = date;
     }
+
     public void btnclick() {
         fetchdata();
     }
@@ -57,18 +54,17 @@ TextView textView2;
         setContentView(R.layout.activity_main);
         showdatetv = findViewById(R.id.showdateTv);
         recyclerView = findViewById(R.id.recylerView);
-        pincode  = findViewById(R.id.pincode);
-textView2 = findViewById(R.id.notavail);
+        pincode = findViewById(R.id.pincode);
+        textView2 = findViewById(R.id.notavail);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         customAdapter = new CustomAdapter(this);
         recyclerView.setAdapter(customAdapter);
 
 
-
-
     }
-    void fetchdata(){
+
+    void fetchdata() {
         recyclerView.setVisibility(View.GONE);
 
 
@@ -76,7 +72,7 @@ textView2 = findViewById(R.id.notavail);
         //change this code
 
 
-               String url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode="+newpincode+"&date="+newdate;
+        String url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=" + newpincode + "&date=" + newdate;
         Log.d("tag", "onErrorResponse: called");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -86,25 +82,25 @@ textView2 = findViewById(R.id.notavail);
 
                         try {
                             JSONArray jsonArray = response.getJSONArray("sessions");
-                            if(jsonArray.length()==0){
+                            if (jsonArray.length() == 0) {
 
                                 textView2.setText("No vaccine available! Try another Pin/Date");
                                 textView2.setVisibility(View.VISIBLE);
 
-                            }
-                            else{
+                            } else {
                                 textView2.setVisibility(View.GONE);
                                 recyclerView.setVisibility(View.VISIBLE);
-                            ArrayList<Vaccines> vaccinesArray = new ArrayList<Vaccines>();
-                            for (int i=0;i<jsonArray.length();i++){
-                                JSONObject vaccines = jsonArray.getJSONObject(i);
+                                ArrayList<Vaccines> vaccinesArray = new ArrayList<Vaccines>();
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject vaccines = jsonArray.getJSONObject(i);
 
-                                Vaccines vacciness = new Vaccines(vaccines.getString("available_capacity_dose1"),vaccines.getString("available_capacity_dose2") , vaccines.getString("min_age_limit"),vaccines.getString("vaccine"),vaccines.getString("fee_type"),vaccines.getString("name"),vaccines.getString("block_name"));
-                                vaccinesArray.add(vacciness);
+                                    Vaccines vacciness = new Vaccines(vaccines.getString("available_capacity_dose1"), vaccines.getString("available_capacity_dose2"), vaccines.getString("min_age_limit"), vaccines.getString("vaccine"), vaccines.getString("fee_type"), vaccines.getString("name"), vaccines.getString("block_name"));
+                                    vaccinesArray.add(vacciness);
 
                                 }
-                            customAdapter.updateVaccines(vaccinesArray);}
-                             } catch (JSONException e) {
+                                customAdapter.updateVaccines(vaccinesArray);
+                            }
+                        } catch (JSONException e) {
                             Log.d("tag", "onErrorResponse: notnoice");
                             e.printStackTrace();
                         }
@@ -132,11 +128,8 @@ textView2 = findViewById(R.id.notavail);
     }
 
 
-
-
-
     public void newbutton(View view) {
-        Intent intent = new Intent(this,MainActivity2.class );
+        Intent intent = new Intent(this, MainActivity2.class);
 
         startActivity(intent);
     }

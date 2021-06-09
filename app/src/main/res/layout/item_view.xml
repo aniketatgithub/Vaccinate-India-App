@@ -144,7 +144,7 @@ app:cardBackgroundColor="@color/teal_700"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
                 android:src="@drawable/n2dose"
-                app:layout_constraintEnd_toStartOf="@+id/available_capacity_dose2"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/available_capacity_dose2" />
 
             <TextView
@@ -154,10 +154,10 @@ app:cardBackgroundColor="@color/teal_700"
                 android:layout_margin="10dp"
                 android:text="Dose 2"
                 android:textColor="@color/white"
-
+                app:layout_constraintLeft_toRightOf="@+id/dose2image"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/min_age_limit" />
+
+                app:layout_constraintTop_toBottomOf="@+id/available_capacity_dose1" />
 
 
 

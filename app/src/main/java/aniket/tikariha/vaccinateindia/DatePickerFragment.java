@@ -2,16 +2,14 @@ package aniket.tikariha.vaccinateindia;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public  class DatePickerFragment extends DialogFragment
+public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
     @Override
@@ -28,12 +26,12 @@ public  class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        int updatemonth = month +1;
-        String abc = day+"/"+updatemonth+"/"+year;
+        int updatemonth = month + 1;
+        String abc = day + "/" + updatemonth + "/" + year;
         MainActivity.setdate(abc);
         MainActivity.recyclerView.removeAllViewsInLayout();
-        ((MainActivity)getActivity()).fetchdata();
-MainActivity.showdatetv.setText(abc);
+        ((MainActivity) getActivity()).fetchdata();
+        MainActivity.showdatetv.setText(abc);
     }
 }
 
